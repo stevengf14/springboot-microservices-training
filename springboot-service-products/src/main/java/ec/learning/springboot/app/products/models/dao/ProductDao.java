@@ -4,6 +4,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import ec.learning.springboot.app.products.models.entity.Product;
 
+/**
+*
+* @author Steven Guamán - October 2022
+*/
 public interface ProductDao extends CrudRepository<Product, Long> {
 
 }

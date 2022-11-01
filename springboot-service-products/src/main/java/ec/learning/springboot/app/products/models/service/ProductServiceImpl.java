@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ec.learning.springboot.app.products.models.dao.ProductDao;
 import ec.learning.springboot.app.products.models.entity.Product;
 
+/**
+*
+* @author Steven Guamán - October 2022
+*/
 @Service
 public class ProductServiceImpl implements IProductService {
 

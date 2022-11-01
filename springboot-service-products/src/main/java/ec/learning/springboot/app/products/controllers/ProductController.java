@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.learning.springboot.app.products.models.service.IProductService;
 import ec.learning.springboot.app.products.models.entity.Product;
 
+/**
+*
+* @author Steven Guamán - October 2022
+*/
 @RestController
 public class ProductController {
 
