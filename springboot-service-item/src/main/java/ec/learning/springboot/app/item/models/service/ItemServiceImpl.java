@@ -32,10 +32,10 @@ public class ItemServiceImpl implements IItemService {
 
 	@Override
 	public Item findById(Long id, Integer quantity) {
-		Map<String, String> pathVariables = new HashMap<>();
+		Map<String, String> pathVariables = new HashMap<String, String>();
 		pathVariables.put("id", id.toString());
 		Product product = restClient.getForObject("http://localhost:8001/get/{id}", Product.class, pathVariables);
-		return null;
+		return new Item(product, quantity);
 	}
 
 }
