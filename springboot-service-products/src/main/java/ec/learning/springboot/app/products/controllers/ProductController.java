@@ -11,9 +11,9 @@ import ec.learning.springboot.app.products.models.service.IProductService;
 import ec.learning.springboot.app.products.models.entity.Product;
 
 /**
-*
-* @author Steven Guamán - October 2022
-*/
+ *
+ * @author Steven Guamán - October 2022
+ */
 @RestController
 public class ProductController {
 
@@ -21,12 +21,12 @@ public class ProductController {
 	private IProductService productService;
 
 	@GetMapping("/getAll")
-	public List<Product> toList() {
+	public List<Product> getAll() {
 		return productService.findAll();
 	}
 
 	@GetMapping("/get/{id}")
-	public Product detail(@PathVariable Long id) {
+	public Product get(@PathVariable Long id) {
 		return productService.findById(id);
 	}
 
