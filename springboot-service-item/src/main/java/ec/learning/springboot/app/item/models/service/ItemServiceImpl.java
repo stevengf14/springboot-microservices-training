@@ -17,7 +17,7 @@ import ec.learning.springboot.app.item.models.Product;
  *
  * @author Steven Guamán - October 2022
  */
-@Service
+@Service("serviceRestTemplate")
 public class ItemServiceImpl implements IItemService {
 
 	@Autowired
