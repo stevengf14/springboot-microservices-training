@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import ec.learning.springboot.app.item.models.Product;
 
+/**
+*
+* @author Steven Guamán - November 2022
+*/
 @FeignClient(name = "service-products", url = "localhost:8001")
 public interface IProductClientRest {
 	
