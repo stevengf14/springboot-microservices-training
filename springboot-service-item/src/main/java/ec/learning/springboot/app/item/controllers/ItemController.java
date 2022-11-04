@@ -17,16 +17,16 @@ import ec.learning.springboot.app.item.models.service.IItemService;
  */
 @RestController
 public class ItemController {
-	
+
 	@Autowired
-	@Qualifier("itemServiceFeign")
+	@Qualifier("serviceRestTemplate") // @Qualifier("itemServiceFeign")
 	private IItemService itemService;
-	
+
 	@GetMapping("/getAll")
-	public List<Item> getAll(){
+	public List<Item> getAll() {
 		return itemService.findAll();
 	}
-	
+
 	@GetMapping("get/{id}/quantity/{quantity}")
 	public Item get(@PathVariable Long id, @PathVariable Integer quantity) {
 		return itemService.findById(id, quantity);
