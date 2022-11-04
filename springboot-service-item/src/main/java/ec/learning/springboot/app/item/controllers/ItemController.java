@@ -19,7 +19,7 @@ import ec.learning.springboot.app.item.models.service.IItemService;
 public class ItemController {
 
 	@Autowired
-	@Qualifier("serviceRestTemplate") // @Qualifier("itemServiceFeign")
+	@Qualifier("itemServiceFeign") // @Qualifier("serviceRestTemplate")
 	private IItemService itemService;
 
 	@GetMapping("/getAll")
