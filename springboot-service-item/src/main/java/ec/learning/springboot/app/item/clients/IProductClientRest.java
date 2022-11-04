@@ -12,7 +12,7 @@ import ec.learning.springboot.app.item.models.Product;
 *
 * @author Steven Guamán - November 2022
 */
-@FeignClient(name = "service-products", url = "localhost:8001")
+@FeignClient(name = "service-products")
 public interface IProductClientRest {
 	
 	@GetMapping("/getAll")
