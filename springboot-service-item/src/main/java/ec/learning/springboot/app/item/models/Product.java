@@ -26,7 +26,7 @@ public class Product {
 		return name;
 	}
 
-	public void seStName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
