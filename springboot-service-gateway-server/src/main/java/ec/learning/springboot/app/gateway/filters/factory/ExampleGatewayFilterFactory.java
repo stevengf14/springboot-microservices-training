@@ -1,5 +1,7 @@
 package ec.learning.springboot.app.gateway.filters.factory;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -16,14 +18,14 @@ import reactor.core.publisher.Mono;
  * @author Steven Guamán - November 2022
  */
 @Component
-public class ExacmpleGatewayFilterFactory
-		extends AbstractGatewayFilterFactory<ExacmpleGatewayFilterFactory.Configuration> {
+public class ExampleGatewayFilterFactory
+		extends AbstractGatewayFilterFactory<ExampleGatewayFilterFactory.Configuration> {
 
-	public ExacmpleGatewayFilterFactory() {
+	public ExampleGatewayFilterFactory() {
 		super(Configuration.class);
 	}
 
-	private final Logger logger = LoggerFactory.getLogger(ExacmpleGatewayFilterFactory.class);
+	private final Logger logger = LoggerFactory.getLogger(ExampleGatewayFilterFactory.class);
 
 	@Override
 	public GatewayFilter apply(Configuration config) {
@@ -36,6 +38,20 @@ public class ExacmpleGatewayFilterFactory
 				logger.info("Executing post gateway filter factory: " + config.message);
 			}));
 		};
+	}
+	
+	
+
+	@Override
+	public String name() {
+		return "ExampleCookie";
+	}
+
+
+
+	@Override
+	public List<String> shortcutFieldOrder() {
+		return Arrays.asList("message", "cookieName", "cookieValue");
 	}
 
 	public static class Configuration {

@@ -8,9 +8,18 @@ spring:
         - Path=/api/products/**
         filters:
         - StripPrefix=2
+        # - ExampleCookie=Hi my message!, user ,StevenGuaman
+        - name: ExampleCookie
+          args:
+            message: Hi, my message!
+            cookieName: user
+            cookieValue: StevenGuaman
       - id: service-items
         uri: lb://service-items
         predicates:
         - Path=/api/items/**
         filters:
         - StripPrefix=2
+        - AddRequestHeader=token-request, 123456
+        - SetResponseHeader=Content-Type, text/plain
+        - AddRequestParameter=name, steven
