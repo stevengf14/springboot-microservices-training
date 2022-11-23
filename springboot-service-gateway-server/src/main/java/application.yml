@@ -6,6 +6,11 @@ spring:
         uri: lb://service-products
         predicates:
         - Path=/api/products/**
+        #- Header=token, \d+
+        #- Header=Content-Type,application/json
+        #- Method=GET, POST
+        #- Query=color
+        #- Cookie=color, blue
         filters:
         - StripPrefix=2
         # - ExampleCookie=Hi my message!, user ,StevenGuaman
