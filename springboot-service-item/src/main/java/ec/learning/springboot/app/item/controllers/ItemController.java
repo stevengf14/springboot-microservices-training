@@ -2,15 +2,16 @@ package ec.learning.springboot.app.item.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import ec.learning.springboot.app.item.models.Item;
 import ec.learning.springboot.app.item.models.Product;
@@ -22,6 +23,11 @@ import ec.learning.springboot.app.item.models.service.IItemService;
  */
 @RestController
 public class ItemController {
+
+	private final Logger logger = LoggerFactory.getLogger(ItemController.class);
+
+	@Autowired
+	private CircuitBreakerFactory cbFactory;
 
 	@Autowired
 	@Qualifier("itemServiceFeign") // @Qualifier("serviceRestTemplate")
@@ -35,13 +41,15 @@ public class ItemController {
 		return itemService.findAll();
 	}
 
-	@HystrixCommand(fallbackMethod = "alternativeMethdo")
+	// @HystrixCommand(fallbackMethod = "alternativeMethod")
 	@GetMapping("get/{id}/quantity/{quantity}")
 	public Item get(@PathVariable Long id, @PathVariable Integer quantity) {
-		return itemService.findById(id, quantity);
+		return cbFactory.create("items").run(() -> itemService.findById(id, quantity),
+				e -> alternativeMethod(id, quantity, e));
 	}
 
-	public Item alternativeMethdo(Long id, Integer quantity) {
+	public Item alternativeMethod(Long id, Integer quantity, Throwable e) {
+		logger.info(e.getMessage());
 		Item item = new Item();
 		item.setQuantity(quantity);
 		Product product = new Product();

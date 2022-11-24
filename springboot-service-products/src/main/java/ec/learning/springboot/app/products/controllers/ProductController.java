@@ -1,6 +1,7 @@
 package ec.learning.springboot.app.products.controllers;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +40,19 @@ public class ProductController {
 	}
 
 	@GetMapping("/get/{id}")
-	public Product get(@PathVariable Long id) {
-		Product product = productService.findById(id);
-		// product.setPort(Integer.parseInt(env.getProperty("local.server.port")));
-		product.setPort(port);
+	public Product get(@PathVariable Long id) throws InterruptedException {
 
-		/*try {
-			Thread.sleep(2000L);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
+		// to make tests
+		if (id.equals(10L)) {
+			throw new IllegalStateException("Product not exists");
+		}
+		if (id.equals(7L)) {
+			TimeUnit.SECONDS.sleep(5L);
+		}
+
+		Product product = productService.findById(id);
+		product.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+		// product.setPort(port);
 
 		return product;
 	}
