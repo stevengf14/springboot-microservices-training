@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.learning.springboot.app.item.models.Item;
 import ec.learning.springboot.app.item.models.Product;
 import ec.learning.springboot.app.item.models.service.IItemService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 /**
  *
@@ -41,11 +42,16 @@ public class ItemController {
 		return itemService.findAll();
 	}
 
-	// @HystrixCommand(fallbackMethod = "alternativeMethod")
 	@GetMapping("get/{id}/quantity/{quantity}")
 	public Item get(@PathVariable Long id, @PathVariable Integer quantity) {
 		return cbFactory.create("items").run(() -> itemService.findById(id, quantity),
 				e -> alternativeMethod(id, quantity, e));
+	}
+
+	@CircuitBreaker(name="items", fallbackMethod = "alternativeMethod")
+	@GetMapping("get2/{id}/quantity/{quantity}")
+	public Item get2(@PathVariable Long id, @PathVariable Integer quantity) {
+		return itemService.findById(id, quantity);
 	}
 
 	public Item alternativeMethod(Long id, Integer quantity, Throwable e) {
