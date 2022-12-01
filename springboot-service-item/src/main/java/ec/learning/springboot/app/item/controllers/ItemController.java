@@ -1,13 +1,19 @@
 package ec.learning.springboot.app.item.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import org.aspectj.weaver.ast.HasAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -35,6 +41,9 @@ public class ItemController {
 	@Autowired
 	@Qualifier("itemServiceFeign") // @Qualifier("serviceRestTemplate")
 	private IItemService itemService;
+
+	@Value("${configuration.text}")
+	private String text;
 
 	@GetMapping("/getAll")
 	public List<Item> getAll(@RequestParam(name = "name", required = false) String name,
@@ -85,6 +94,15 @@ public class ItemController {
 		product.setPrice(500.00);
 		item.setProduct(product);
 		return CompletableFuture.supplyAsync(() -> item);
+	}
+
+	@GetMapping("/get-config")
+	public ResponseEntity<?> getConfig(@Value("${server.port}") String port) {
+		logger.info(text);
+		Map<String, String> json = new HashMap<>();
+		json.put("text", "text");
+		json.put("port", port);
+		return new ResponseEntity<Map<String, String>>(json, HttpStatus.OK);
 	}
 
 }
