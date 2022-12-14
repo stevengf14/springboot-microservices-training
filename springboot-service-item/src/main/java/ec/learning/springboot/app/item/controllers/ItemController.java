@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.learning.springboot.app.commons.models.entity.Product;
 import ec.learning.springboot.app.item.models.Item;
-import ec.learning.springboot.app.item.models.Product;
 import ec.learning.springboot.app.item.models.service.IItemService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;

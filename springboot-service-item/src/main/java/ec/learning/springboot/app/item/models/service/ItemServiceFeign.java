@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import ec.learning.springboot.app.commons.models.entity.Product;
 import ec.learning.springboot.app.item.clients.IProductClientRest;
 import ec.learning.springboot.app.item.models.Item;
-import ec.learning.springboot.app.item.models.Product;
 
 /**
  *

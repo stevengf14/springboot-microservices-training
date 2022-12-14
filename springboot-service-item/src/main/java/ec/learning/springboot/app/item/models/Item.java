@@ -1,5 +1,7 @@
 package ec.learning.springboot.app.item.models;
 
+import ec.learning.springboot.app.commons.models.entity.Product;
+
 /**
  *
  * @author Steven Guamán - October 2022

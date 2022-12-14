@@ -13,8 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import ec.learning.springboot.app.commons.models.entity.Product;
 import ec.learning.springboot.app.item.models.Item;
-import ec.learning.springboot.app.item.models.Product;
 
 /**
  *

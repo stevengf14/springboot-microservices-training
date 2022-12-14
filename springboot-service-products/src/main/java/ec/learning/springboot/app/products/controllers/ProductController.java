@@ -1,7 +1,7 @@
 package ec.learning.springboot.app.products.controllers;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+// import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import ec.learning.springboot.app.commons.models.entity.Product;
 import ec.learning.springboot.app.products.models.service.IProductService;
-import ec.learning.springboot.app.products.models.entity.Product;
 
 /**
  *
