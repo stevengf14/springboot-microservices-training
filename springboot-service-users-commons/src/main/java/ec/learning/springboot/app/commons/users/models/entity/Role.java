@@ -1,4 +1,4 @@
-package ec.learning.springboot.app.users.commons.models.entity;
+package ec.learning.springboot.app.commons.users.models.entity;
 
 import java.io.Serializable;
 
