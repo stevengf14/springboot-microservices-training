@@ -40,7 +40,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-
 		endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore())
 				.accessTokenConverter(accessTokenConverter());
 	}
@@ -54,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
 		tokenConverter.setSigningKey("any_secret_code");
-		return null;
+		return tokenConverter;
 	}
 
 }
