@@ -21,7 +21,7 @@ import ec.learning.springboot.app.oauth.clients.IUserFeignClient;
  * @author Steven Guamán - December 2022
  */
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements IUserService, UserDetailsService {
 
 	private Logger log = LoggerFactory.getLogger(UserService.class);
 
@@ -41,6 +41,11 @@ public class UserService implements UserDetailsService {
 		log.info("User identified: " + username);
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				user.getEnabled(), true, true, true, authorities);
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		return client.findByUsername(username);
 	}
 
 }
