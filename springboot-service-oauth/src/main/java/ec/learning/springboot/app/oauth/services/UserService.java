@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ec.learning.springboot.app.commons.users.models.entity.User;
 import ec.learning.springboot.app.oauth.clients.IUserFeignClient;
+import feign.FeignException;
 
 /**
  *
@@ -30,17 +31,18 @@ public class UserService implements IUserService, UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = client.findByUsername(username);
-		if (user == null) {
+		try {
+			User user = client.findByUsername(username);
+			List<GrantedAuthority> authorities = user.getRoles().stream()
+					.map(role -> new SimpleGrantedAuthority(role.getName()))
+					.peek(authority -> log.info("Role: " + authority.getAuthority())).collect(Collectors.toList());
+			log.info("User identified: " + username);
+			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+					user.getEnabled(), true, true, true, authorities);
+		} catch (FeignException e) {
 			log.error("Login error, user does not exists '" + username + "' in the system");
 			throw new UsernameNotFoundException("Login error, user does not exists '" + username + "' in the system");
 		}
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName()))
-				.peek(authority -> log.info("Role: " + authority.getAuthority())).collect(Collectors.toList());
-		log.info("User identified: " + username);
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-				user.getEnabled(), true, true, true, authorities);
 	}
 
 	@Override
