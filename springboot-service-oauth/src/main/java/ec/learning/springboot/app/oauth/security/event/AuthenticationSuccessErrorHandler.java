@@ -14,6 +14,10 @@ import ec.learning.springboot.app.commons.users.models.entity.User;
 import ec.learning.springboot.app.oauth.services.IUserService;
 import feign.FeignException;
 
+/**
+ *
+ * @author Steven Guamán - January 2023
+ */
 @Component
 public class AuthenticationSuccessErrorHandler implements AuthenticationEventPublisher {
 
