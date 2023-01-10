@@ -26,7 +26,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthenticationManagerJwt implements ReactiveAuthenticationManager {
 
-	@Value("${config.security.oauth.jwt.key")
+	@Value("${config.security.oauth.jwt.key}")
 	private String jwtKey;
 
 	@Override
