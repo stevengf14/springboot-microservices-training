@@ -44,7 +44,7 @@ public class UserService implements IUserService, UserDetailsService {
 			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 					user.getEnabled(), true, true, true, authorities);
 		} catch (FeignException e) {
-			String error = "Login error, user does not exists '" + username + "' in the system";
+			String error = "Login error, user '" + username + "' does not exists in the system";
 			log.error(error);
 			tracer.currentSpan().tag("error.message", error + ": " + e.getMessage());
 			throw new UsernameNotFoundException(error);
