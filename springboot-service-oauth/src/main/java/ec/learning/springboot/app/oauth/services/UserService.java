@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import brave.Tracer;
 import ec.learning.springboot.app.commons.users.models.entity.User;
 import ec.learning.springboot.app.oauth.clients.IUserFeignClient;
 import feign.FeignException;
@@ -29,6 +30,9 @@ public class UserService implements IUserService, UserDetailsService {
 	@Autowired
 	private IUserFeignClient client;
 
+	@Autowired
+	private Tracer tracer;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
@@ -40,8 +44,10 @@ public class UserService implements IUserService, UserDetailsService {
 			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 					user.getEnabled(), true, true, true, authorities);
 		} catch (FeignException e) {
-			log.error("Login error, user does not exists '" + username + "' in the system");
-			throw new UsernameNotFoundException("Login error, user does not exists '" + username + "' in the system");
+			String error = "Login error, user does not exists '" + username + "' in the system";
+			log.error(error);
+			tracer.currentSpan().tag("error.message", error + ": " + e.getMessage());
+			throw new UsernameNotFoundException(error);
 		}
 	}
 
