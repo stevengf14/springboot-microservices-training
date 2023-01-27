@@ -13,6 +13,117 @@ services:
       - "8761:8761"
     restart: always
     networks:
-      - springcloud-training  
+      - springcloud-training
+  microservices-training-mysql8:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - springcloud-training
+    environment:
+      MYSQL_DATABASE: db_springboot_cloud
+      MYSQL_ROOT_PASSWORD: root
+  microservices-training-postgres12:
+    image: postgres:12-alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - springcloud-training
+    environment:
+      POSTGRES_DB: db_springboot_cloud
+      POSTGRES_PASSWORD: root
+  service-products:
+    image: service-products:v1
+    restart: always
+    networks:
+      - springcloud-training
+    depends_on:
+      - config-server
+      - eureka-server
+      - microservices-training-mysql8
+  service-items:
+    image: service-items:v1
+    ports:
+      - "8002:8002"
+      - "8005:8005"
+      - "8007:8007"
+    restart: always
+    networks:
+      - springcloud-training
+    depends_on:
+      - config-server
+      - eureka-server
+      - service-products
+  service-users:
+    image: service-users:v1
+    restart: always
+    networks:
+      - springcloud-training
+    depends_on:
+      - config-server
+      - eureka-server
+      - microservices-training-postgres12
+  service-oauth:
+    image: service-oauth:v1
+    ports:
+      - "9100:9100"
+    restart: always
+    networks:
+      - springcloud-training
+    depends_on:
+      - config-server
+      - eureka-server
+      - service-users
+  zuul-server:
+    image: zuul-server:v1
+    ports:
+      - "8090:8090"
+    restart: always
+    networks:
+      - springcloud-training
+    depends_on:
+      - config-server
+      - eureka-server
+      - service-products
+      - service-items
+      - service-users
+      - service-oauth
+  gateway-server:
+    image: gateway-server:v1
+    ports:
+      - "8090:8090"
+    restart: always
+    networks:
+      - springcloud-training
+    depends_on:
+      - config-server
+      - eureka-server
+      - service-products
+      - service-items
+      - service-users
+      - service-oauth
+  microservices-training-rabbitmq8:
+    image: rabbitmq:3.8-management-alpine
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    restart: always
+    networks:
+      - springcloud-training
+  zipkin-server:
+    image: zipkin-server:v1
+    ports:
+      - "9411:9411"
+    restart: always
+    networks:
+      - springcloud-training
+    environment:
+      RABBIT_ADDRESSES: microservices-training-rabbitmq8:5672
+      STORAGE_TYPE: mysql
+      MYSQL_USER: zipkin
+      MYSQL_PASS: zipkin
+      MYSQL_HOST: microservices-training-mysql8
 networks:
   springcloud-training:
