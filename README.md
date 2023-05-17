@@ -1,5 +1,5 @@
 # springboot-microservices-training
-About This repository is based on a Course: Microservicios con Spring Boot y Spring Cloud Netflix Eureka -> https://www.udemy.com/course/microservicios-con-spring-boot-y-spring-cloud/
+This repository is based on a Course: Microservicios con Spring Boot y Spring Cloud Netflix Eureka -> https://www.udemy.com/course/microservicios-con-spring-boot-y-spring-cloud/
 
 ## About the course
 Welcome to the Microservices course, you will learn line by line and from scratch how to build a microservices architecture with Spring Boot 2 and Spring Cloud, from the most basic concepts to a complete ecosystem of interconnected services through registration and dynamic scaling with Eureka (server of name), Spring Cloud Gateway (gateway) and Zuul, implementing load balancing with Spring Cloud LoadBalancer and Ribbon, fault tolerance with Resilience4J. Automate, scale, and deploy microservices in Docker containers to production.
